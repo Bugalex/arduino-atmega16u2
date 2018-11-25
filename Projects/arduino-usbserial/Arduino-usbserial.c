@@ -143,7 +143,7 @@ void SetupHardware(void)
 	wdt_disable();
 
 	/* Hardware Initialization */
-	Serial_Init(9600, false);
+	Serial_Init(250000, false);
 	LEDs_Init();
 	USB_Init();
 
@@ -209,7 +209,7 @@ void EVENT_CDC_Device_LineEncodingChanged(USB_ClassInfo_CDC_Device_t* const CDCI
 	/* Special case 57600 baud for compatibility with the ATmega328 bootloader. */	
 	UBRR1  = (CDCInterfaceInfo->State.LineEncoding.BaudRateBPS == 57600)
 			 ? SERIAL_UBBRVAL(CDCInterfaceInfo->State.LineEncoding.BaudRateBPS)
-			 : SERIAL_2X_UBBRVAL(CDCInterfaceInfo->State.LineEncoding.BaudRateBPS);	
+			 : SERIAL_2X_UBBRVAL(250000);	
 
 	UCSR1C = ConfigMask;
 	UCSR1A = (CDCInterfaceInfo->State.LineEncoding.BaudRateBPS == 57600) ? 0 : (1 << U2X1);
